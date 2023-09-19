@@ -11,9 +11,14 @@ namespace Codecool.CodecoolShop.Models
     {
         const int BaseQuantity = 1;
         public int UserId { get; set; }
-        public Dictionary<Product, int> ItemsInCart {  get; set; }
+        public Dictionary<Product, int> ItemsInCart { get; set; }
 
         public decimal CartValue { get; set; }
+
+        public Cart()
+        {
+            ItemsInCart = new Dictionary<Product, int>();
+        }
         public void CalculateCartValue()
         {
             if (ItemsInCart == null)
@@ -40,7 +45,7 @@ namespace Codecool.CodecoolShop.Models
                 {
                     if (item.Key == product)
                     {
-                      
+
                         ItemsInCart[item.Key] = item.Value + BaseQuantity;
                         Hits++;
                     }
@@ -87,16 +92,16 @@ namespace Codecool.CodecoolShop.Models
         {
             try
             {
-              
+
                 foreach (var item in ItemsInCart)
                 {
                     if (item.Key == product)
                     {
                         ItemsInCart[item.Key] = item.Value + BaseQuantity;
-                       
+
                     }
                 }
-             
+
             }
             catch (Exception e)
             {
@@ -126,6 +131,16 @@ namespace Codecool.CodecoolShop.Models
 
             }
 
+        }
+
+        public override string ToString()
+
+        {
+            if (ItemsInCart == null)
+            {
+                return "Cart is empty";
+            }
+            return "Items in Cart: " + ItemsInCart.Count;
         }
 
 

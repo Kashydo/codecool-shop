@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace Codecool.CodecoolShop.Daos.Implementations
 {
-    public class CartDaoMemory : ICart
+    public class CartDaoMemory : ICartDao
     {
         private List<Cart> data = new List<Cart>();
         private static CartDaoMemory instance = null;
@@ -40,6 +40,11 @@ namespace Codecool.CodecoolShop.Daos.Implementations
         public void Remove(int id)
         {
             data.Remove(this.Get(id));
+        }
+
+        public Cart Get()
+        {
+            throw new System.NotImplementedException();
         }
     }
 }

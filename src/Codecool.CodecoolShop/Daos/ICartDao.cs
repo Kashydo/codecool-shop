@@ -2,8 +2,8 @@
 using System.Collections.Generic;
 namespace Codecool.CodecoolShop.Daos
 {
-    public interface ICart : IDao<Cart>
+    public interface ICartDao : IDao<Cart>
     {
-       
+
     }
 }
