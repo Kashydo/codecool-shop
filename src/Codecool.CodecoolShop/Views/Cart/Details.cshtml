@@ -1,0 +1,40 @@
+﻿@model List<Codecool.CodecoolShop.Models.Cart>
+
+@{
+    ViewData["Title"] = "Cart";
+}
+
+<div class="container">
+    <h1>Your Cart</h1>
+    @if (ViewData["Cart"] != null)
+    {
+        var cart = ViewData["Cart"] as IEnumerable<Product>;
+        var index = 0;
+        foreach (var element in cart)
+        {
+            <div class="col-lg-3 col-lg-3" style="display: inline-block; max-width: 350px; height: 350px">
+                <div class="card">
+                    <img src="img/@(element.Name).jpg" style="height: 50%; width: 50%; align-self: center; padding-top: 10px">
+
+                    <div class="card-body">
+                        <h5 class="card-title text-center">
+                            Product
+                            @index
+                        </h5>
+                        <h5 class="card-title">@element.Name</h5>
+                        <p class="card-text">@element.Description.</p>
+                        <p class="card-text">Category: @element.ProductCategory.Department</p>
+                        <p class="card-text">Supplier: @element.Supplier.Name</p>
+                        <p class="card-text text-center"><strong>Price: @element.DefaultPrice.ToString("C2")</strong></p>
+                        <a href="#" class="btn btn-primary add-to-cart-button" data-product-id="@element.Id">Add To Cart</a>
+                    </div>
+                </div>
+            </div>
+            index++;
+        }
+    }
+    else
+    {
+        <p>Your cart is empty.</p>
+    }
+</div>

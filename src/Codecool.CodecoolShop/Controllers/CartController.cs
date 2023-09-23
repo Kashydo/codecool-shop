@@ -1,4 +1,5 @@
 ﻿using Codecool.CodecoolShop.Daos.Implementations;
+using Codecool.CodecoolShop.Models;
 using Codecool.CodecoolShop.Services;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -6,15 +7,19 @@ using Microsoft.Extensions.Logging;
 
 namespace Codecool.CodecoolShop.Controllers
 {
+
     public class CartController : Controller
     {
+        const int TestId = 1;
         private readonly ILogger<CartController> _logger;
         public CartService CartService { get; set; }
+        private readonly Cart _cart;
 
 
-        public CartController(ILogger<CartController> logger)
+        public CartController(ILogger<CartController> logger, Cart cart)
         {
             _logger = logger;
+            _cart = cart;
             CartService = new CartService(
                 CartDaoMemory.GetInstance());
         }
@@ -26,7 +31,7 @@ namespace Codecool.CodecoolShop.Controllers
         }
 
         // GET: CartController/Details/5
-        public ActionResult Details(int id)
+        public ActionResult Details()
         {
             return View();
         }
@@ -93,5 +98,10 @@ namespace Codecool.CodecoolShop.Controllers
                 return View();
             }
         }
+
+
     }
+
+
 }
+

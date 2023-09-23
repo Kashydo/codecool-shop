@@ -39,29 +39,35 @@ namespace Codecool.CodecoolShop.Models
         public void AddItemToCart(Product product)
         {
             try
+
             {
-                int Hits = 0;
-                foreach (var item in ItemsInCart)
+                if (product == null)
                 {
-                    if (item.Key == product)
-                    {
-
-                        ItemsInCart[item.Key] = item.Value + BaseQuantity;
-                        Hits++;
-                    }
+                    Console.WriteLine("Product is null");
                 }
-                if (ItemsInCart == null || Hits == 0)
+                else
                 {
-                    ItemsInCart.Add(product, BaseQuantity);
+                    if (ItemsInCart == null)
+                    {
+                        ItemsInCart = new Dictionary<Product, int>();
+                    }
 
+                    if (ItemsInCart.ContainsKey(product))
+                    {
+                        ItemsInCart[product] += BaseQuantity;
+                    }
+                    else
+                    {
+                        ItemsInCart.Add(product, BaseQuantity);
+                    }
                 }
             }
             catch (Exception e)
             {
                 Console.WriteLine(e.ToString());
+                // Możesz rzucić wyjątek lub zalogować go, ale warto zastanowić się, co zrobić w przypadku błędu
             }
         }
-
         public void AddItemToCart(Product product, int quantity)
         {
             try
