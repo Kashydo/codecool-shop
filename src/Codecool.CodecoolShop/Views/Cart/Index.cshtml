@@ -4,10 +4,39 @@
 @model List<Codecool.CodecoolShop.Models.Item>
 
 <div class="container">
-   @foreach (var item in ViewBag.cart)
-    {
-       <p>tu będzie product</p>
-    }
+   
+
+        
+            
+                <table>
+                    <tr>
+                        <th>Image</th>
+                        <th>Name</th>
+                        <th>Category</th>
+                        <th>Supplier</th>
+                        <th>Price</th>
+                        <th>Quantity</th>
+                        <th>Value</th>
+                    </tr>
+                    @if (ViewBag.cart != null){
+                        @foreach (var item in ViewBag.cart)
+                        {
+                            <tr>
+            
+                                <td>  <img src="~/img/@(item.Product.Name).jpg" style="height: 50%; width: 50%; align-self: center; padding-top: 10px"></td>
+                                <td>@item.Product.Name</td>
+                                <td>@item.Product.ProductCategory.Department</td>
+                                <td>@item.Product.Supplier.Name</td>
+                                <td> @item.Product.DefaultPrice.ToString("C2")</td>
+                                <td>@item.Quantity</td>
+                                <td>@item.Value().ToString("C2")</td>
+                            </tr>
+                        }
+                    }
+                </table>
+                           
+        
+    
 
 
 </div>

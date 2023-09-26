@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Codecool.CodecoolShop.Models;
 using Codecool.CodecoolShop.Services;
+using LearnASPNETCoreMVCWithRealApps.Helpers;
 
 namespace Codecool.CodecoolShop.Controllers
 {
@@ -28,6 +29,8 @@ namespace Codecool.CodecoolShop.Controllers
         public IActionResult Index()
         {
             var products = ProductService.GetProductsForCategory(1);
+            var cart = SessionHelper.GetObjectFromJson<List<Item>>(HttpContext.Session, "cart");
+            ViewBag.quantity = cart?.Sum(item => item.Quantity) ?? 0;
             return View(products.ToList());
         }
 

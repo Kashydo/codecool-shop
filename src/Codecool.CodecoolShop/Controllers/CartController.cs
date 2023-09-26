@@ -16,8 +16,9 @@ namespace Codecool.CodecoolShop.Controllers
         public IActionResult Index()
         {
             var cart = SessionHelper.GetObjectFromJson<List<Item>>(HttpContext.Session, "cart");
-            ViewBag.cart = cart;
-            ViewBag.total = cart.Sum(item => item.Product.DefaultPrice * item.Quantity);
+            ViewBag.cart = cart ?? new List<Item>();
+            ViewBag.total = cart?.Sum(item => item.Product.DefaultPrice * item.Quantity) ?? 0;
+            ViewBag.quantity = cart?.Sum(item => item.Quantity) ?? 0;
             return View();
         }
 
