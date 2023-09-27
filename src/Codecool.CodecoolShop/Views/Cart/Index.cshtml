@@ -28,7 +28,11 @@
                                 <td>@item.Product.ProductCategory.Department</td>
                                 <td>@item.Product.Supplier.Name</td>
                                 <td> @item.Product.DefaultPrice.ToString("C2")</td>
-                                <td>@item.Quantity</td>
+                    <td> <form asp-controller="cart" asp-action="edit" method="post">
+                        <input type="number" id="quantity" name="quantity" value="@item.Quantity" min="0"><br>
+                        <input type="submit" value="Save Change"  asp-controller="cart" asp-action="eddit" asp-route-id="@item.Product.Id">
+                        </form>
+                    </td>
                                 <td>@item.Value().ToString("C2")</td>
                             </tr>
                         }

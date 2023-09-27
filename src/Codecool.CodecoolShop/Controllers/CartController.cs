@@ -59,6 +59,31 @@ namespace Codecool.CodecoolShop.Controllers
             SessionHelper.SetObjectAsJson(HttpContext.Session, "cart", cart);
             return RedirectToAction("Index");
         }
+        [HttpPost]
+        [Route("eddit/{id}")]
+        public IActionResult Eddit(int id)
+        {
+
+            if (int.TryParse(Request.Form["quantity"], out int quantity))
+            {
+                List<Item> cart = SessionHelper.GetObjectFromJson<List<Item>>(HttpContext.Session, "cart");
+                int index = isExist(id);
+                if (index != -1)
+                {
+                    if (quantity > 0)
+                    {
+                        cart[index].Quantity = quantity;
+                        SessionHelper.SetObjectAsJson(HttpContext.Session, "cart", cart);
+                    }
+                    else
+                    {
+                        Remove(id);
+                    }
+                }
+            }
+
+            return RedirectToAction("Index");
+        }
 
         private int isExist(int id)
         {
