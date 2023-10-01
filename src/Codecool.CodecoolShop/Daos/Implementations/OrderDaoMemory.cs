@@ -117,19 +117,59 @@ namespace Codecool.CodecoolShop.Daos.Implementations
             return data;
         }
 
-        public IEnumerable<Product> GetBy(Client client)
+        public IEnumerable<Order> GetBy(Client client)
         {
-            throw new System.NotImplementedException();
+            List<Order> orders = GetAll().ToList();
+            List<Order> ordersFromClint = new List<Order>();
+            foreach (var order in orders)
+            {
+                if (order.Client.Id == client.Id)
+                {
+                    ordersFromClint.Add(order);
+                }
+            }
+            return ordersFromClint;
         }
 
         public void Remove(int id)
         {
-            throw new System.NotImplementedException();
+            string[] lines = File.ReadAllLines(orderPath);
+
+
+            List<string> updatedLines = new List<string>();
+
+            foreach (string line in lines)
+            {
+                string[] parts = line.Split(separator);
+                if (parts.Length == headings.Length)
+                {
+                    int orderId = int.Parse(parts[0]);
+                    if (orderId != id)
+                    {
+                        updatedLines.Add(line);
+                    }
+                }
+            }
+
+
+            File.WriteAllLines(orderPath, updatedLines);
         }
 
-        public int Total(Order order)
+        public decimal Total(Order order)
         {
-            throw new NotImplementedException();
+            List<Order> orders = GetAll().ToList();
+            decimal total = 0;
+            foreach (var o in orders)
+            {
+                if (o.Id == order.Id)
+                {
+                    foreach (var item in o.Items)
+                    {
+                        total += item.Value();
+                    }
+                }
+            }
+            return total;
         }
     }
 }

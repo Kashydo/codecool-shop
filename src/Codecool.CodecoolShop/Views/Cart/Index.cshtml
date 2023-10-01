@@ -7,44 +7,47 @@
    
 
         
-            
-                <table>
-                    <tr>
-                        <th>Image</th>
-                        <th>Name</th>
-                        <th>Category</th>
-                        <th>Supplier</th>
-                        <th>Price</th>
-                        <th>Quantity</th>
-                        <th>Value</th>
-                    </tr>
-                    @if (ViewBag.cart != null){
-                        @foreach (var item in ViewBag.cart)
-                        {
-                            <tr>
-            
-                                <td>  <img src="~/img/@(item.Product.Name).jpg" style="height: 50%; width: 50%; align-self: center; padding-top: 10px"></td>
-                                <td>@item.Product.Name</td>
-                                <td>@item.Product.ProductCategory.Department</td>
-                                <td>@item.Product.Supplier.Name</td>
-                                <td> @item.Product.DefaultPrice.ToString("C2")</td>
+    @if (ViewBag.cart != null && ViewBag.cart.Count > 0)
+    {
+        <table>
+            <tr>
+                <th>Image</th>
+                <th>Name</th>
+                <th>Category</th>
+                <th>Supplier</th>
+                <th>Price</th>
+                <th>Quantity</th>
+                <th>Value</th>
+            </tr>
+
+            @foreach (var item in ViewBag.cart)
+            {
+                <tr>
+
+                    <td>  <img src="~/img/@(item.Product.Name).jpg" style="height: 50%; width: 50%; align-self: center; padding-top: 10px"></td>
+                    <td>@item.Product.Name</td>
+                    <td>@item.Product.ProductCategory.Department</td>
+                    <td>@item.Product.Supplier.Name</td>
+                    <td> @item.Product.DefaultPrice.ToString("C2")</td>
                     <td> <form asp-controller="cart" asp-action="edit" method="post">
-                        <input type="number" id="quantity" name="quantity" value="@item.Quantity" min="0"><br>
-                        <input type="submit" value="Save Change"  asp-controller="cart" asp-action="eddit" asp-route-id="@item.Product.Id">
+                            <input type="number" id="quantity" name="quantity" value="@item.Quantity" min="0"><br>
+                            <input type="submit" value="Save Change"  asp-controller="cart" asp-action="eddit" asp-route-id="@item.Product.Id">
                         </form>
                     </td>
-                                <td>@item.Value().ToString("C2")</td>
-                            </tr>
-                        }
-                    }
-                    <tr>
-                        <td>Total</td>
-                        <td>@ViewBag.total.ToString("C2")</td>
-                    </tr>
-                </table>
-                           
-        
-    
+                    <td>@item.Value().ToString("C2")</td>
+                </tr>
+            }
 
+            <tr>
+            <td>Total</td>
+            <td>@ViewBag.total.ToString("C2")</td>
+            </tr>
+        </table>
+        <a type="button" class="btn btn-primary" asp-controller="checkout" asp-action="delivery" >>Checkout</a>
+    }
+    else
+    {
+        <h2>Ten Koszyk jest pósty</h2>
+    }
 
 </div>
